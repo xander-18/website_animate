@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useEffect } from "react"
 import gsap from "gsap"
 import {
@@ -26,17 +24,6 @@ import plano1 from "../assets/img/logos-blackhouse/plano1.webp"
 import estudio1 from "../assets/img/logos-blackhouse/proyectovalle.jpg"
 import { FaWhatsapp } from "react-icons/fa"
 
-interface DetalleProyectoProps {
-  proyecto: any
-  volverAlHome: () => void
-  handleSubmit: () => void
-  currentImageGallery: number
-  setCurrentImageGallery: (index: number) => void
-  selectedPlano: number
-  setSelectedPlano: (index: number) => void
-  detalleRef: React.RefObject<HTMLDivElement>
-}
-
 const DetalleProyecto = ({
   proyecto,
   volverAlHome,
@@ -46,7 +33,7 @@ const DetalleProyecto = ({
   selectedPlano,
   setSelectedPlano,
   detalleRef,
-}: DetalleProyectoProps) => {
+}) => {
   // Animaciones de entrada cuando se monta el componente
   useEffect(() => {
     if (detalleRef.current) {
@@ -156,11 +143,7 @@ const DetalleProyecto = ({
       <section className="py-20 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative h-96 rounded-2xl overflow-hidden mb-12">
-            <img
-              src={img}
-              alt="Vista panorámica"
-              className="w-full h-full object-cover"
-            />
+            <img src={img || "/placeholder.svg"} alt="Vista panorámica" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <div className="text-center">
                 <div className="w-20 h-20 bg-emerald-400/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
@@ -168,7 +151,7 @@ const DetalleProyecto = ({
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-2">Vista Panorámica {proyecto.nombre}</h3>
                 <p className="text-white/70">Experimenta las vistas desde tu futuro hogar</p>
-              </div>  
+              </div>
             </div>
           </div>
         </div>
@@ -208,11 +191,11 @@ const DetalleProyecto = ({
               </div>
 
               <div className="relative mb-6">
-             <img
-  src={plano1}
-  alt={`Plano ${proyecto.planos[selectedPlano].tipo}`}
-  className="w-full h-80 object-contain bg-white/5 rounded-xl"
-/>
+                <img
+                  src={plano1 || "/placeholder.svg"}
+                  alt={`Plano ${proyecto.planos[selectedPlano].tipo}`}
+                  className="w-full h-80 object-contain bg-white/5 rounded-xl"
+                />
               </div>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
@@ -377,25 +360,23 @@ const DetalleProyecto = ({
             </div>
 
             {/* Mapa */}
-<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
-  <div className="relative h-96 bg-gray-800 rounded-xl overflow-hidden">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.0927456784216!2d-76.235886!3d-9.9262337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c302c999af73%3A0xceac9a3797efef97!2sJir%C3%B3n%20Pedro%20Puelles%20682%2C%20Hu%C3%A1nuco%2010001!5e0!3m2!1ses-419!2spe!4v1751737066522!5m2!1ses-419!2spe"
-      width="100%"
-      height="100%"
-      loading="lazy"
-      className="w-full h-full border-0"
-      referrerPolicy="no-referrer-when-downgrade"
-    ></iframe>
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="bg-emerald-400 text-black px-4 py-2 rounded-full font-semibold">
-        {proyecto.nombre}
-      </div>
-    </div>
-  </div>
-</div>
-
-
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+              <div className="relative h-96 bg-gray-800 rounded-xl overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.0927456784216!2d-76.235886!3d-9.9262337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c302c999af73%3A0xceac9a3797efef97!2sJir%C3%B3n%20Pedro%20Puelles%20682%2C%20Hu%C3%A1nuco%2010001!5e0!3m2!1ses-419!2spe!4v1751737066522!5m2!1ses-419!2spe"
+                  width="100%"
+                  height="100%"
+                  loading="lazy"
+                  className="w-full h-full border-0"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-emerald-400 text-black px-4 py-2 rounded-full font-semibold">
+                    {proyecto.nombre}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -406,7 +387,7 @@ const DetalleProyecto = ({
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
               <img
-                src={estudio1}
+                src={estudio1 || "/placeholder.svg"}
                 alt="Lifestyle"
                 className="w-full h-96 object-cover rounded-2xl"
               />

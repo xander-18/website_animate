@@ -29,11 +29,11 @@ import proyectosmart from "../assets/img/logos-blackhouse/proyectosmart.png"
 import backgroundMusic from "../assets/sounds/background.mp3"
 import DepaCard from "./DepaCard"
 import AgendarForm from "./AgendarForm"
-// import PresupuestoSection from "./PresupuestoSection"
+import PresupuestoSection from "./PresupuestoSection"
 import { FaWhatsapp } from "react-icons/fa"
 // import DetalleProyecto from "./DetalleProyecto"
 import DetalleProyecto from "./DetalleProducto"
-import AsesoresSection from "./AsesoresSection" 
+import AsesoresSection from "./AsesoresSection"
 
 // Registrar el plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -827,11 +827,11 @@ Me gustaría agendar una cita para conocer más detalles.`
       <AsesoresSection onSelectAsesor={handleSelectAsesor} selectedAsesor={selectedAsesor} />
 
       {/* SECCIÓN PRESUPUESTO */}
-      {/* <PresupuestoSection
+      <PresupuestoSection
         presupuestoRef={presupuestoRef}
         selectedBudget={selectedBudget}
         handleBudgetSelect={handleBudgetSelect}
-      /> */}
+      />
 
       {/* SECCIÓN AGENDAR */}
       <AgendarForm

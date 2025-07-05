@@ -147,54 +147,69 @@ const AsesoresSection = ({ onSelectAsesor, selectedAsesor }) => {
   ]
 
   // Animaciones mejoradas
+  // Animaciones mejoradas
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animación del título con efecto más suave
-      ScrollTrigger.create({
-        trigger: titleRef.current,
-        start: "top 85%",
-        onEnter: () => {
-          gsap.fromTo(
-            titleRef.current.children,
-            { opacity: 0, y: 30, rotationX: -5 }, // Reducir rotación y movimiento
-            {
-              opacity: 1,
-              y: 0,
-              rotationX: 0,
-              duration: 2.5, // Aumentar duración
-              ease: "power2.out", // Cambiar a easing más suave
-              stagger: 0.2, // Reducir stagger
-            },
-          )
-        },
-      })
+      // Verificar que las referencias existan antes de animar
+      if (titleRef.current && titleRef.current.children) {
+        // Animación del título con efecto más suave
+        ScrollTrigger.create({
+          trigger: titleRef.current,
+          start: "top 85%",
+          onEnter: () => {
+            if (titleRef.current && titleRef.current.children) {
+              gsap.fromTo(
+                titleRef.current.children,
+                { opacity: 0, y: 30, rotationX: -5 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  rotationX: 0,
+                  duration: 2.5,
+                  ease: "power2.out",
+                  stagger: 0.2,
+                },
+              )
+            }
+          },
+        })
+      }
 
-      // Animación de las tarjetas más suave
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 80%",
-        onEnter: () => {
-          gsap.fromTo(
-            cardsRef.current,
-            {
-              opacity: 0,
-              y: 50, // Reducir movimiento vertical
-              scale: 0.95, // Menos escala
-              rotationY: -5, // Menos rotación
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotationY: 0,
-              duration: 2.2, // Aumentar duración
-              stagger: 0.15, // Reducir stagger
-              ease: "power2.out", // Easing más suave
-              delay: 0.3,
-            },
-          )
-        },
-      })
+      // Verificar que las tarjetas existan antes de animar
+      if (sectionRef.current && cardsRef.current.length > 0) {
+        // Animación de las tarjetas más suave
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top 80%",
+          onEnter: () => {
+            if (cardsRef.current.length > 0) {
+              // Filtrar elementos null del array
+              const validCards = cardsRef.current.filter((card) => card !== null)
+              if (validCards.length > 0) {
+                gsap.fromTo(
+                  validCards,
+                  {
+                    opacity: 0,
+                    y: 50,
+                    scale: 0.95,
+                    rotationY: -5,
+                  },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    rotationY: 0,
+                    duration: 2.2,
+                    stagger: 0.15,
+                    ease: "power2.out",
+                    delay: 0.3,
+                  },
+                )
+              }
+            }
+          },
+        })
+      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -205,11 +220,14 @@ const AsesoresSection = ({ onSelectAsesor, selectedAsesor }) => {
       onSelectAsesor(asesor)
     }
 
+    const cardElement = document.querySelector(`.card-${asesor.id}`)
+    if (!cardElement) return
+
     // Animación de selección más suave
-    gsap.to(`.card-${asesor.id}`, {
-      scale: 1.02, // Reducir escala
-      duration: 0.6, // Aumentar duración
-      ease: "power1.out", // Easing más suave
+    gsap.to(cardElement, {
+      scale: 1.02,
+      duration: 0.6,
+      ease: "power1.out",
       yoyo: true,
       repeat: 1,
     })
@@ -233,19 +251,22 @@ He visto tu perfil y me parece que tu especialidad en "${asesor.especialidad}" e
   const handleCardHover = (asesorId, isHovering) => {
     setHoveredCard(isHovering ? asesorId : null)
 
+    const cardElement = document.querySelector(`.card-${asesorId}`)
+    if (!cardElement) return
+
     if (isHovering) {
-      gsap.to(`.card-${asesorId}`, {
-        y: -5, // Reducir movimiento vertical
-        boxShadow: "0 20px 40px rgba(16, 185, 129, 0.25)", // Reducir intensidad de sombra
-        duration: 0.6, // Aumentar duración
-        ease: "power1.out", // Easing más suave
+      gsap.to(cardElement, {
+        y: -5,
+        boxShadow: "0 20px 40px rgba(16, 185, 129, 0.25)",
+        duration: 0.6,
+        ease: "power1.out",
       })
     } else {
-      gsap.to(`.card-${asesorId}`, {
+      gsap.to(cardElement, {
         y: 0,
-        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.25)", // Sombra más suave
-        duration: 0.6, // Aumentar duración
-        ease: "power1.out", // Easing más suave
+        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.25)",
+        duration: 0.6,
+        ease: "power1.out",
       })
     }
   }
@@ -270,7 +291,9 @@ He visto tu perfil y me parece que tu especialidad en "${asesor.especialidad}" e
 
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-wider">
             ASESORES
-          
+            <span className="block text-transparent bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-4xl md:text-5xl font-light mt-2">
+              de clase mundial
+            </span>
           </h2>
 
           <p className="text-xl text-white/70 max-w-4xl mx-auto leading-relaxed">
