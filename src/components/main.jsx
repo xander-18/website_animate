@@ -409,14 +409,14 @@ const Main = () => {
 
     // Inicializar Lenis para smooth scrolling premium
     const lenis = new Lenis({
-      duration: 1.8,
+      duration: 1.2, // Reducido de 1.8 a 1.2
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: "vertical",
       gestureDirection: "vertical",
       smooth: true,
-      mouseMultiplier: 0.8,
+      mouseMultiplier: 0.6, // Reducido de 0.8 a 0.6
       smoothTouch: false,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.2, // Reducido de 1.5 a 1.2
       infinite: false,
     })
 
@@ -431,7 +431,11 @@ const Main = () => {
     gsap.config({
       force3D: true,
       nullTargetWarn: false,
+      autoSleep: 60, // Añadir para mejor performance
     })
+
+    // Añadir configuración de performance
+    gsap.set("*", { willChange: "auto" })
 
     // Solo ejecutar animaciones del hero si estamos en home
     if (currentView === "home" && textRef.current) {
@@ -512,15 +516,14 @@ const Main = () => {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom top",
-        scrub: 6,
+        scrub: 2, // Reducido de 6 a 2 para menos lag
         onUpdate: (self) => {
           const progress = self.progress
-          gsap.to(containerRef.current, {
-            opacity: 1 - progress * 0.3,
-            y: -8 * progress,
-            scale: 1 - progress * 0.01,
-            duration: 0.5,
-            ease: "none",
+          gsap.set(containerRef.current, {
+            // Cambiar 'to' por 'set' para mejor performance
+            opacity: 1 - progress * 0.2, // Reducido de 0.3 a 0.2
+            y: -4 * progress, // Reducido de -8 a -4
+            scale: 1 - progress * 0.005, // Reducido de 0.01 a 0.005
           })
         },
       })
@@ -528,30 +531,31 @@ const Main = () => {
       // Animaciones para la galería ULTRA suaves
       ScrollTrigger.create({
         trigger: galleryRef.current,
-        start: "top 95%",
+        start: "top 85%", // Cambiar de 95% a 85%
         onEnter: () => {
+          // Animación del título más rápida y simple
           if (galleryRef.current && galleryRef.current.querySelector("h2")) {
             gsap.fromTo(
               galleryRef.current.querySelector("h2"),
-              { opacity: 0, y: 50, scale: 0.92 },
-              { opacity: 1, y: 0, scale: 1, duration: 3.5, ease: "power1.out" },
+              { opacity: 0, y: 30 }, // Reducir y de 50 a 30
+              { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, // Reducir duración de 3.5 a 1.2
             )
           }
 
-          // Animar las tarjetas de departamentos
+          // Animación de tarjetas MÁS RÁPIDA Y EFICIENTE
           const depaCards = document.querySelectorAll(".depa-card")
           if (depaCards.length > 0) {
             gsap.fromTo(
               depaCards,
-              { opacity: 0, y: 60, scale: 0.95 },
+              { opacity: 0, y: 40, scale: 0.98 }, // Reducir y de 60 a 40, scale de 0.95 a 0.98
               {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 2.5,
-                stagger: 0.3,
-                ease: "power1.out",
-                delay: 0.5,
+                duration: 0.8, // Reducir duración de 2.5 a 0.8
+                stagger: 0.1, // Reducir stagger de 0.3 a 0.1
+                ease: "power2.out", // Cambiar ease más simple
+                delay: 0.2, // Reducir delay de 0.5 a 0.2
               },
             )
           }
@@ -560,19 +564,19 @@ const Main = () => {
 
       ScrollTrigger.create({
         trigger: agendarRef.current,
-        start: "top 90%",
+        start: "top 85%", // Cambiar de 90% a 85%
         onEnter: () => {
           if (agendarRef.current && agendarRef.current.children) {
             gsap.fromTo(
               agendarRef.current.children,
-              { opacity: 0, y: 35, scale: 0.96 },
+              { opacity: 0, y: 20 }, // Reducir y de 35 a 20
               {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 3,
-                stagger: 0.4,
-                ease: "power1.out",
+                duration: 1, // Reducir duración de 3 a 1
+                stagger: 0.15, // Reducir stagger de 0.4 a 0.15
+                ease: "power2.out", // Cambiar ease más simple
               },
             )
           }
@@ -584,25 +588,25 @@ const Main = () => {
         gsap.to(letters, {
           y: -2,
           color: "#00ff88",
-          textShadow: "0 0 20px #00ff88, 0 0 40px #00ff88",
-          duration: 1.2,
-          stagger: 0.03,
-          ease: "power1.out",
+          textShadow: "0 0 15px #00ff88", // Simplificar shadow
+          duration: 0.6, // Reducir duración de 1.2 a 0.6
+          stagger: 0.02, // Reducir stagger de 0.03 a 0.02
+          ease: "power2.out",
         })
       }
 
       const handleMouseLeave = () => {
         const shadowIntensity = introComplete
-          ? "0 0 30px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.5)"
-          : "0 0 10px rgba(255,255,255,0.5)"
+          ? "0 0 20px rgba(255,255,255,0.8)" // Simplificar shadow
+          : "0 0 8px rgba(255,255,255,0.4)"
 
         gsap.to(letters, {
           y: 0,
           color: "#ffffff",
           textShadow: shadowIntensity,
-          duration: 1.2,
-          stagger: 0.03,
-          ease: "power1.out",
+          duration: 0.6, // Reducir duración de 1.2 a 0.6
+          stagger: 0.02, // Reducir stagger de 0.03 a 0.02
+          ease: "power2.out",
         })
       }
 
@@ -671,13 +675,33 @@ Mis datos:
 • Nombre: ${clientInfo.nombre}
 • Teléfono: ${clientInfo.telefono}
 • Email: ${clientInfo.email}
-• Asesor: ${selectedAsesor?.nombre || "No seleccionado"}
+• Asesor preferido: ${selectedAsesor?.nombre || "No seleccionado"}
 
 Me gustaría agendar una cita para conocer más detalles.`
 
-    const whatsappUrl = `https://wa.me/51977249329?text=${encodeURIComponent(mensaje)}`
+    const whatsappUrl = `https://wa.me/51999999999?text=${encodeURIComponent(mensaje)}`
     window.open(whatsappUrl, "_blank")
   }
+
+  useEffect(() => {
+    // Optimizar CSS para las tarjetas de departamentos
+    const style = document.createElement("style")
+    style.textContent = `
+      .depa-card {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+      .depa-card:hover {
+        will-change: transform;
+      }
+    `
+    document.head.appendChild(style)
+
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [])
 
   // RENDERIZADO CONDICIONAL
   if (currentView === "detalle") {
@@ -729,8 +753,7 @@ Me gustaría agendar una cita para conocer más detalles.`
           </div>
 
           {/* Items de navegación desktop - OCULTOS EN MÓVIL */}
-  <div className="hidden md:flex items-center gap-8 ml-auto mr-10">
-
+          <div className="hidden md:flex items-center gap-6 ml-auto">
             <button
               onClick={verAsesores}
               className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
