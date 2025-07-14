@@ -18,6 +18,10 @@ import {
   Dumbbell,
   Waves,
   Coffee,
+  ShieldCheck,
+  ScrollText,
+  Menu,
+  X,
 } from "lucide-react"
 import Logo1 from "../assets/img/logos-blackhouse/logo.png"
 import Logo2 from "../assets/img/logos-blackhouse/logo2.png"
@@ -26,14 +30,16 @@ import estudio2 from "../assets/img/logos-blackhouse/estudio2.jpeg"
 import estudio4 from "../assets/img/logos-blackhouse/estudio4.jpeg"
 import proyectovalle from "../assets/img/logos-blackhouse/proyectovalle.jpg"
 import proyectosmart from "../assets/img/logos-blackhouse/proyectosmart.png"
-import backgroundMusic from "../assets/sounds/background.mp3"
 import DepaCard from "./DepaCard"
 import AgendarForm from "./AgendarForm"
-import PresupuestoSection from "./PresupuestoSection"
 import { FaWhatsapp } from "react-icons/fa"
-// import DetalleProyecto from "./DetalleProyecto"
 import DetalleProyecto from "./DetalleProducto"
 import AsesoresSection from "./AsesoresSection"
+import AsesoresDetalle from "./AsesoresDetalle"
+import TestimoniosSection from "./TestimoniosSection"
+import huertasValle from "../assets/videos/0216.mp4"
+import NuestroEquipo from "./Nosotros"
+import ComingSoonOverlay from "./ComingSoonOverlay"
 
 // Registrar el plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -47,54 +53,45 @@ const Main = () => {
   const backgroundVideoRef = useRef(null)
   const videoOverlayRef = useRef(null)
   const audioRef = useRef(null)
-
-  // Referencias para las nuevas secciones
-  const depasRef = useRef(null)
-  const presupuestoRef = useRef(null)
   const agendarRef = useRef(null)
   const galleryRef = useRef(null)
-  const mapRef = useRef(null)
-  const carouselRef = useRef(null)
-  const video3dRef = useRef(null)
   const detalleRef = useRef(null)
 
   const [introComplete, setIntroComplete] = useState(false)
   const [animationsInitialized, setAnimationsInitialized] = useState(false)
   const [selectedBudget, setSelectedBudget] = useState("")
-  const [selectedDepa, setSelectedDepa] = useState(0)
   const [isVideoPlaying, setIsVideoPlaying] = useState({})
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [audioStarted, setAudioStarted] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
-  const [isVideoFullscreen, setIsVideoFullscreen] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState("todos")
   const [selectedAsesor, setSelectedAsesor] = useState(null)
 
   // NUEVOS ESTADOS PARA LA NAVEGACIÓN
   const [showNavbar, setShowNavbar] = useState(false)
-  const [currentView, setCurrentView] = useState("home") // "home" o "detalle"
+  const [currentView, setCurrentView] = useState("home") // "home", "detalle", "asesores"
   const [selectedProject, setSelectedProject] = useState(null)
   const [currentImageGallery, setCurrentImageGallery] = useState(0)
   const [selectedPlano, setSelectedPlano] = useState(0)
-
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // NUEVO ESTADO PARA MENÚ MÓVIL
   const [clientInfo, setClientInfo] = useState({
     nombre: "",
     telefono: "",
     email: "",
-    presupuesto: "",
+    asesor: "",
   })
 
   // Datos de los departamentos - Estilo Edifica pero con nuestra esencia
   const departamentos = [
     {
       id: 1,
-      nombre: "BLACKHOUSE PREMIUM",
+      nombre: "HUERTAS DEL VALLE",
       tipo: "ESTUDIO PREMIUM",
       ubicacion: "Santa Maria del Valle",
       estado: "ÚLTIMAS UNIDADES",
       destacado: true,
-      area: "35m²",
-      precio: "$85,000",
+      area: "120m²",
+      precio: "Agotado",
       precioM2: "$2,428/m²",
       dormitorios: 1,
       baños: 1,
@@ -108,17 +105,15 @@ const Main = () => {
         { icon: Wifi, texto: "Sistema de domótica" },
       ],
       amenidades: [
-        { icon: Dumbbell, nombre: "Gimnasio equipado" },
-        { icon: Waves, nombre: "Piscina infinity" },
-        { icon: Coffee, nombre: "Área de coworking" },
-        { icon: Eye, nombre: "Terraza panorámica" },
-        { icon: Shield, nombre: "Seguridad 24/7" },
-        { icon: Users, nombre: "Concierge" },
-        { icon: TreePine, nombre: "Jardín interior" },
-        { icon: Building, nombre: "Lobby premium" },
+        { icon: TreePine, nombre: "Parque" },
+        { icon: Waves, nombre: "Cerco Vivo" },
+        { icon: Coffee, nombre: "Vías de 8 metros" },
+        { icon: Eye, nombre: "Casa de Campo" },
+        { icon: ShieldCheck, nombre: "Rodeado de Naturaleza" },
+        { icon: ScrollText, nombre: "Título en RRPP" },
       ],
       imagenes: [proyectovalle, estudio1, estudio2],
-      video3d: "https://res.cloudinary.com/dourqe39h/video/upload/v1751584424/onevideo_1_dcpgmn.mp4",
+      video3d: huertasValle,
       planos: [
         {
           tipo: "TIPO A",
@@ -136,7 +131,7 @@ const Main = () => {
         },
       ],
       entrega: "Inmediata",
-      financiamiento: "Disponible",
+      financiamiento: "Agotado",
       descripcion:
         "Descubre el equilibrio perfecto entre elegancia y funcionalidad en nuestro estudio premium. Cada detalle ha sido cuidadosamente diseñado para ofrecerte una experiencia de vida única en el corazón de Santa María del Valle.",
       ubicacionDetalle: {
@@ -156,7 +151,7 @@ const Main = () => {
     },
     {
       id: 2,
-      nombre: "BLACKHOUSE PENTHOUSE",
+      nombre: "HIRAKI",
       tipo: "PENTHOUSE EXCLUSIVO",
       ubicacion: "La Colectora",
       estado: "PREVENTA",
@@ -215,8 +210,8 @@ const Main = () => {
       salaVentas: {
         direccion: "Av. Rivera Navarrete 450, San Isidro",
         horarios: {
-          lunes_viernes: "11:00 am a 8:00 pm",
-          sabado_domingo: "10:00 am a 6:00 pm",
+          lunes_viernes: "9:00 am a 1:00 pm",
+          sabado_domingo: "previa cita",
         },
         telefono: "+51 999 999 999",
         email: "ventas@blackhouse.pe",
@@ -224,7 +219,7 @@ const Main = () => {
     },
     {
       id: 3,
-      nombre: "BLACKHOUSE DELUXE - SMART",
+      nombre: "HALIT",
       tipo: "DEPARTAMENTO INTELIGENTE",
       ubicacion: "Huanuco",
       estado: "PRÓXIMO LANZAMIENTO",
@@ -283,8 +278,8 @@ const Main = () => {
       salaVentas: {
         direccion: "Av. Rivera Navarrete 450, San Isidro",
         horarios: {
-          lunes_viernes: "11:00 am a 8:00 pm",
-          sabado_domingo: "10:00 am a 6:00 pm",
+          lunes_viernes: "9:00 am a 1:00 pm",
+          sabado_domingo: "previa cita",
         },
         telefono: "+51 999 999 999",
         email: "ventas@blackhouse.pe",
@@ -301,20 +296,41 @@ const Main = () => {
 
   // FUNCIONES DE NAVEGACIÓN
   const verProyecto = (proyecto) => {
+    if (proyecto.nombre === "HALIT") {
+      setShowComingSoon(true)
+      window.scrollTo({ top: 0, behavior: "smooth" })
+      return
+    }
+
+    // Si no es HALIT, sí mostrar el detalle
     setSelectedProject(proyecto)
     setCurrentView("detalle")
     setCurrentImageGallery(0)
     setSelectedPlano(0)
-
-    // Scroll al top suavemente
     window.scrollTo({ top: 0, behavior: "smooth" })
-
-    // Animar entrada de la vista detalle
     setTimeout(() => {
       if (detalleRef.current) {
         gsap.fromTo(detalleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
       }
     }, 100)
+  }
+
+  const verAsesores = () => {
+    setCurrentView("asesores")
+    setMobileMenuOpen(false) // Cerrar menú móvil
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const verTestimonios = () => {
+    setCurrentView("testimonios")
+    setMobileMenuOpen(false) // Cerrar menú móvil
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const verSomos = () => {
+    setCurrentView("somos")
+    setMobileMenuOpen(false) // Cerrar menú móvil
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   const volverAlHome = () => {
@@ -330,6 +346,9 @@ const Main = () => {
           setSelectedProject(null)
         },
       })
+    } else {
+      setCurrentView("home")
+      setSelectedProject(null)
     }
   }
 
@@ -350,24 +369,6 @@ const Main = () => {
       } else {
         audioRef.current.muted = true
         setIsMuted(true)
-      }
-    }
-  }
-
-  // Función para pantalla completa del video
-  const toggleVideoFullscreen = (depaId) => {
-    const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
-    if (videoElement) {
-      if (!isVideoFullscreen) {
-        if (videoElement.requestFullscreen) {
-          videoElement.requestFullscreen()
-        }
-        setIsVideoFullscreen(true)
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
-        }
-        setIsVideoFullscreen(false)
       }
     }
   }
@@ -401,7 +402,6 @@ const Main = () => {
         setShowNavbar(false)
       }
     }
-
     window.addEventListener("scroll", handleScroll)
 
     // Solo ejecutar las animaciones una vez y solo en la vista home
@@ -530,31 +530,31 @@ const Main = () => {
         trigger: galleryRef.current,
         start: "top 95%",
         onEnter: () => {
-          gsap.fromTo(
-            galleryRef.current.querySelector("h2"),
-            { opacity: 0, y: 50, scale: 0.92 },
-            { opacity: 1, y: 0, scale: 1, duration: 3.5, ease: "power1.out" },
-          )
+          if (galleryRef.current && galleryRef.current.querySelector("h2")) {
+            gsap.fromTo(
+              galleryRef.current.querySelector("h2"),
+              { opacity: 0, y: 50, scale: 0.92 },
+              { opacity: 1, y: 0, scale: 1, duration: 3.5, ease: "power1.out" },
+            )
+          }
 
           // Animar las tarjetas de departamentos
-          gsap.fromTo(
-            ".depa-card",
-            { opacity: 0, y: 60, scale: 0.95 },
-            { opacity: 1, y: 0, scale: 1, duration: 2.5, stagger: 0.3, ease: "power1.out", delay: 0.5 },
-          )
-        },
-      })
-
-      // Animaciones para las secciones de presupuesto y agenda
-      ScrollTrigger.create({
-        trigger: presupuestoRef.current,
-        start: "top 90%",
-        onEnter: () => {
-          gsap.fromTo(
-            presupuestoRef.current.children,
-            { opacity: 0, y: 40, scale: 0.96 },
-            { opacity: 1, y: 0, scale: 1, duration: 2.8, stagger: 0.6, ease: "power1.out" },
-          )
+          const depaCards = document.querySelectorAll(".depa-card")
+          if (depaCards.length > 0) {
+            gsap.fromTo(
+              depaCards,
+              { opacity: 0, y: 60, scale: 0.95 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 2.5,
+                stagger: 0.3,
+                ease: "power1.out",
+                delay: 0.5,
+              },
+            )
+          }
         },
       })
 
@@ -562,11 +562,20 @@ const Main = () => {
         trigger: agendarRef.current,
         start: "top 90%",
         onEnter: () => {
-          gsap.fromTo(
-            agendarRef.current.children,
-            { opacity: 0, y: 35, scale: 0.96 },
-            { opacity: 1, y: 0, scale: 1, duration: 3, stagger: 0.4, ease: "power1.out" },
-          )
+          if (agendarRef.current && agendarRef.current.children) {
+            gsap.fromTo(
+              agendarRef.current.children,
+              { opacity: 0, y: 35, scale: 0.96 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 3,
+                stagger: 0.4,
+                ease: "power1.out",
+              },
+            )
+          }
         },
       })
 
@@ -615,24 +624,40 @@ const Main = () => {
     }
   }, [currentView, animationsInitialized])
 
+  // FUNCIÓN CORREGIDA PARA MANEJAR EL TOGGLE DE VIDEO
   const handleVideoToggle = (depaId) => {
-    const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
-    if (videoElement) {
-      if (isVideoPlaying[depaId]) {
-        videoElement.pause()
-      } else {
-        videoElement.play().catch(console.error)
-      }
-      setIsVideoPlaying((prev) => ({
+    console.log("Toggle video for depa:", depaId)
+    // Primero actualizar el estado
+    setIsVideoPlaying((prev) => {
+      const newState = {
         ...prev,
         [depaId]: !prev[depaId],
-      }))
-    }
+      }
+
+      // Usar setTimeout para asegurar que el DOM se actualice
+      setTimeout(() => {
+        const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
+        console.log("Video element found:", videoElement)
+        if (videoElement) {
+          if (newState[depaId]) {
+            // Si debe reproducirse
+            videoElement.play().catch((error) => {
+              console.error("Error playing video:", error)
+            })
+          } else {
+            // Si debe pausarse
+            videoElement.pause()
+          }
+        }
+      }, 100) // Pequeño delay para asegurar que el DOM se actualice
+
+      return newState
+    })
   }
 
-  const handleBudgetSelect = (budget) => {
-    setSelectedBudget(budget)
-    setClientInfo({ ...clientInfo, presupuesto: budget })
+  const handleAsesorSelect = (asesor) => {
+    setSelectedAsesor(asesor)
+    setClientInfo({ ...clientInfo, asesor: asesor.nombre })
   }
 
   const handleInputChange = (field, value) => {
@@ -644,13 +669,13 @@ const Main = () => {
 
 Mis datos:
 • Nombre: ${clientInfo.nombre}
-• Teléfono: ${clientInfo.telefono}  
+• Teléfono: ${clientInfo.telefono}
 • Email: ${clientInfo.email}
-• Presupuesto: ${clientInfo.presupuesto}
+• Asesor: ${selectedAsesor?.nombre || "No seleccionado"}
 
 Me gustaría agendar una cita para conocer más detalles.`
 
-    const whatsappUrl = `https://wa.me/51999999999?text=${encodeURIComponent(mensaje)}`
+    const whatsappUrl = `https://wa.me/51977249329?text=${encodeURIComponent(mensaje)}`
     window.open(whatsappUrl, "_blank")
   }
 
@@ -670,42 +695,122 @@ Me gustaría agendar una cita para conocer más detalles.`
     )
   }
 
+  if (currentView === "asesores") {
+    return <AsesoresDetalle onVolver={volverAlHome} />
+  }
+
+  if (currentView === "testimonios") {
+    return <TestimoniosSection onVolver={volverAlHome} />
+  }
+
+  if (currentView === "somos") {
+    return <NuestroEquipo onVolver={volverAlHome} />
+  }
+
   return (
     <div className="min-h-screen bg-black">
-      {/* NAVBAR FIJO AL HACER SCROLL */}
+      {/* NAVBAR FIJO AL HACER SCROLL - MEJORADO RESPONSIVE */}
+      {showComingSoon && <ComingSoonOverlay onComplete={() => setShowComingSoon(false)} />}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10 transition-all duration-500 ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          {/* Logo */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          {/* Logo - MEJORADO RESPONSIVE */}
           <div className="flex items-center">
-            <img src={Logo1 || "/placeholder.svg"} alt="BlackHouse Logo" className="w-7 h-11" />
-            <img src={Logo2 || "/placeholder.svg"} alt="BlackHouse Logo 2" className="w-3 h-7 translate-y-1" />
-            <span className="ml-3 text-white font-bold text-lg tracking-wider">BLACK HOUSE</span>
+            <img src={Logo1 || "/placeholder.svg"} alt="BlackHouse Logo" className="w-6 h-9 sm:w-7 sm:h-11" />
+            <img
+              src={Logo2 || "/placeholder.svg"}
+              alt="BlackHouse Logo 2"
+              className="w-2.5 h-6 sm:w-3 sm:h-7 translate-y-1"
+            />
+            <span className="ml-2 sm:ml-3 text-white font-bold text-base sm:text-lg tracking-wider">BLACK HOUSE</span>
           </div>
-          {/* Botón */}
-          <button
-            onClick={() => {
-              // Scroll suave hacia la sección de departamentos
-              galleryRef.current?.scrollIntoView({ behavior: "smooth" })
-            }}
-            className="bg-emerald-400 hover:bg-emerald-500 text-black font-semibold px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
-            aria-label="Ver Departamentos"
-          >
-            <FaWhatsapp className="w-6 h-6" />
-          </button>
+
+          {/* Items de navegación desktop - OCULTOS EN MÓVIL */}
+  <div className="hidden md:flex items-center gap-8 ml-auto mr-10">
+
+            <button
+              onClick={verAsesores}
+              className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
+            >
+              Asesores
+            </button>
+            <button
+              onClick={verTestimonios}
+              className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
+            >
+              Testimonios
+            </button>
+            <button
+              onClick={verSomos}
+              className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
+            >
+              Nuestro Equipo
+            </button>
+          </div>
+
+          {/* Botones de acción - MEJORADO RESPONSIVE */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Botón menú móvil - SOLO VISIBLE EN MÓVIL */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white hover:text-emerald-400 transition-colors duration-300 p-2"
+              aria-label="Menú"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+
+            {/* Botón WhatsApp */}
+            <button
+              onClick={() => {
+                window.open("https://wa.me/51935090537?", "_blank")
+                galleryRef.current?.scrollIntoView({ behavior: "smooth" })
+              }}
+              className="bg-emerald-400 hover:bg-emerald-500 text-black font-semibold px-3 py-2 sm:px-4 sm:py-2 rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-1 sm:gap-2"
+              aria-label="Ver Departamentos"
+            >
+              <FaWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline text-sm">WhatsApp</span>
+            </button>
+          </div>
         </div>
+
+        {/* Menú móvil desplegable - NUEVO */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-white/10">
+            <div className="px-4 py-4 space-y-4">
+              <button
+                onClick={verAsesores}
+                className="block w-full text-left text-white hover:text-emerald-400 transition-colors duration-300 font-medium py-2"
+              >
+                Asesores
+              </button>
+              <button
+                onClick={verTestimonios}
+                className="block w-full text-left text-white hover:text-emerald-400 transition-colors duration-300 font-medium py-2"
+              >
+                Testimonios
+              </button>
+              <button
+                onClick={verSomos}
+                className="block w-full text-left text-white hover:text-emerald-400 transition-colors duration-300 font-medium py-2"
+              >
+                Nuestro Equipo
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* AUDIO DE FONDO */}
       <audio ref={audioRef} loop preload="auto" className="hidden">
-        <source src={backgroundMusic} type="audio/mpeg" />
+        <source src="" type="audio/mpeg" />
         Tu navegador no soporta el elemento audio.
       </audio>
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION - MEJORADO RESPONSIVE */}
       <div ref={containerRef} className="relative flex flex-col justify-center items-center h-screen overflow-hidden">
         <video
           ref={backgroundVideoRef}
@@ -718,42 +823,52 @@ Me gustaría agendar una cita para conocer más detalles.`
           style={{ opacity: 0 }}
         >
           <source
-            src="https://res.cloudinary.com/dourqe39h/video/upload/v1751584424/onevideo_1_dcpgmn.mp4"
+            src="https://res.cloudinary.com/dcj324bua/video/upload/v1752505685/render_pagina_p8h4yn.mp4"
             type="video/mp4"
           />
           Tu navegador no soporta el elemento video.
         </video>
-
         <div ref={videoOverlayRef} className="absolute inset-0 bg-black/70 transition-opacity duration-1000" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
 
-        <div className="relative z-10 flex flex-col justify-center items-center">
-          <div className="flex items-center mb-8">
+        <div className="relative z-10 flex flex-col justify-center items-center px-4">
+          <div className="flex items-center mb-6 sm:mb-8">
             <img
               ref={leftRef}
               src={Logo1 || "/placeholder.svg"}
               alt="left"
-              className="w-24 transition-all duration-1000"
+              className="w-16 sm:w-20 md:w-24 transition-all duration-1000"
             />
             <img
               ref={rightRef}
               src={Logo2 || "/placeholder.svg"}
               alt="right"
-              className="w-9 -ml-0 translate-y-2.5 transition-all duration-1000"
+              className="w-6 sm:w-7 md:w-9 -ml-0 translate-y-2.5 transition-all duration-1000"
             />
           </div>
 
           <div
             ref={textRef}
-            className="text-white text-4xl md:text-6xl font-bold tracking-wider cursor-pointer select-none transition-all duration-1000"
+            className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-wide text-center cursor-pointer select-none transition-all duration-1000"
             style={{
               fontFamily: "Arial, sans-serif",
               textShadow: "0 0 10px rgba(255,255,255,0.5)",
             }}
           >
-            {"BLACKHOUSE".split("").map((letter, index) => (
+            {"BLACK".split("").map((letter, index) => (
               <span
-                key={index}
+                key={`black-${index}`}
+                className="letter inline-block transition-all duration-500"
+                style={{ transformOrigin: "center bottom" }}
+              >
+                {letter}
+              </span>
+            ))}
+            {/* Espacio entre palabras */}
+            <span style={{ margin: "0 0.3rem sm:0 0.5rem" }} />
+            {"HOUSE".split("").map((letter, index) => (
+              <span
+                key={`house-${index}`}
                 className="letter inline-block transition-all duration-500"
                 style={{ transformOrigin: "center bottom" }}
               >
@@ -762,42 +877,48 @@ Me gustaría agendar una cita para conocer más detalles.`
             ))}
           </div>
 
-          <p className="text-white/80 text-xl md:text-2xl mt-4 text-center max-w-2xl">
+          <p className="text-white/80 text-sm sm:text-base md:text-lg lg:text-2xl mt-4 text-center max-w-2xl leading-relaxed">
             ¡Últimas unidades! El depa que tanto soñaste está a punto de volar… ¡No dejes que se te escape de las manos!
           </p>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        {/* Scroll indicator - MEJORADO RESPONSIVE */}
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10">
           <div className="flex flex-col items-center text-white/70">
-            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bounce"></div>
+            <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <div className="w-1 h-2 sm:h-3 bg-white/50 rounded-full mt-2 animate-bounce"></div>
             </div>
             <span className="text-xs mt-2 tracking-wider">DESCUBRE MÁS</span>
           </div>
         </div>
       </div>
 
-      {/* SECCIÓN DE DEPARTAMENTOS */}
-      <section ref={galleryRef} className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Header con estilo Edifica */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-wider">
+      {/* SECCIÓN DE DEPARTAMENTOS - MEJORADO RESPONSIVE */}
+      <section
+        ref={galleryRef}
+        className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-12 sm:py-16 lg:py-20"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          {/* Header con estilo Edifica - MEJORADO RESPONSIVE */}
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-wider">
               ESPACIOS
-              <span className="block text-emerald-400 text-4xl md:text-5xl font-light mt-2">con estilo</span>
+              <span className="block text-emerald-400 text-3xl sm:text-4xl md:text-5xl font-light mt-2">
+                con estilo
+              </span>
             </h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto">
               Descubre nuestros proyectos inmobiliarios diseñados para tu estilo de vida
             </p>
           </div>
 
-          {/* Filtros estilo Edifica */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {/* Filtros estilo Edifica - MEJORADO RESPONSIVE */}
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             {filtros.map((filtro) => (
               <button
                 key={filtro.id}
                 onClick={() => setSelectedFilter(filtro.id)}
-                className={`px-6 py-3 rounded-full border-2 transition-all duration-500 ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full border-2 transition-all duration-500 text-sm sm:text-base ${
                   selectedFilter === filtro.id
                     ? "bg-emerald-400 border-emerald-400 text-black font-semibold"
                     : "border-white/30 text-white hover:border-emerald-400/50 hover:text-emerald-400"
@@ -808,8 +929,8 @@ Me gustaría agendar una cita para conocer más detalles.`
             ))}
           </div>
 
-          {/* Grid de departamentos estilo Edifica */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Grid de departamentos estilo Edifica - MEJORADO RESPONSIVE */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {departamentosFiltrados.map((depa) => (
               <DepaCard
                 key={depa.id}
@@ -823,22 +944,13 @@ Me gustaría agendar una cita para conocer más detalles.`
         </div>
       </section>
 
-      {/* SECCIÓN DE ASESORES */}
       <AsesoresSection onSelectAsesor={handleSelectAsesor} selectedAsesor={selectedAsesor} />
 
-      {/* SECCIÓN PRESUPUESTO */}
-      <PresupuestoSection
-        presupuestoRef={presupuestoRef}
-        selectedBudget={selectedBudget}
-        handleBudgetSelect={handleBudgetSelect}
-      />
-
-      {/* SECCIÓN AGENDAR */}
       <AgendarForm
         clientInfo={clientInfo}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
-        selectedBudget={selectedBudget}
+        selectedAsesor={selectedAsesor}
         agendarRef={agendarRef}
       />
     </div>
