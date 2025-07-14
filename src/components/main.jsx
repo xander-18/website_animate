@@ -753,7 +753,7 @@ Me gustaría agendar una cita para conocer más detalles.`
           </div>
 
           {/* Items de navegación desktop - OCULTOS EN MÓVIL */}
-          <div className="hidden md:flex items-center gap-6 ml-auto">
+         <div className="hidden md:flex items-center gap-8 ml-auto mr-10">
             <button
               onClick={verAsesores}
               className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
