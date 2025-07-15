@@ -2,7 +2,7 @@
 import './index.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Main from './components/main';
-import PoliticaPrivacidad from './components/PoliticaPrivacidad'; // la nueva página
+import PoliticaPrivacidad from './pages/politica-de-privacidad';
 
 function App() {
   return (
