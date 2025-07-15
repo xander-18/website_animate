@@ -98,7 +98,7 @@ const DetalleProyecto = ({
                 </div>
                 <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
                   <Bed className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 mx-auto mb-2" />
-                  <span className="text-white/70 text-xs block">Dormitorios</span>
+                  <span className="text-white/70 text-xs block">26 LOTES DISPONIBLES</span>
                   <span className="text-white font-semibold text-xs sm:text-sm">{proyecto.dormitorios}</span>
                 </div>
                 <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">

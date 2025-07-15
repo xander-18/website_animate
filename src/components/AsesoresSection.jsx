@@ -93,7 +93,7 @@ const AsesoresSection = ({ onSelectAsesor, selectedAsesor }) => {
       clientesSatisfechos: "100%",
       especialidad: "Lotes y Depas",
       rating: 5.0,
-      telefono: "+51 999 456 789",
+      telefono: "51931696858",
       email: "roberto.castillo@blackhouse.pe",
       logros: [
         "👑 Director del Año 2023",

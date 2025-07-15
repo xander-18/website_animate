@@ -86,14 +86,14 @@ const Main = () => {
     {
       id: 1,
       nombre: "HUERTAS DEL VALLE",
-      tipo: "ESTUDIO PREMIUM",
+      tipo: "SANTA MARIA DEL VALLE",
       ubicacion: "Santa Maria del Valle",
       estado: "ÚLTIMAS UNIDADES",
       destacado: true,
       area: "120m²",
       precio: "Agotado",
       precioM2: "$2,428/m²",
-      dormitorios: 1,
+      // dormitorios: 1,
       baños: 1,
       estacionamiento: 1,
       caracteristicas: [
@@ -133,8 +133,9 @@ const Main = () => {
       entrega: "Inmediata",
       financiamiento: "Agotado",
       descripcion:
-        "Descubre el equilibrio perfecto entre elegancia y funcionalidad en nuestro estudio premium. Cada detalle ha sido cuidadosamente diseñado para ofrecerte una experiencia de vida única en el corazón de Santa María del Valle.",
-      ubicacionDetalle: {
+      "Lanzado en febrero de 2024, este proyecto de 26 lotes ubicado en Santa María del Valle tuvo una acogida excepcional, logrando vender el 95% en solo 3 meses. Cuenta con todos los servicios básicos: agua, luz y título de propiedad, ofreciendo seguridad y calidad a sus propietarios.",
+      
+        ubicacionDetalle: {
         direccion: "Av. Santa María del Valle 123, Lima",
         distrito: "Santa María del Valle",
         coordenadas: { lat: -12.0464, lng: -77.0428 },
@@ -152,7 +153,7 @@ const Main = () => {
     {
       id: 2,
       nombre: "HIRAKI",
-      tipo: "PENTHOUSE EXCLUSIVO",
+      tipo: "HUANUCO - AMARILIS",
       ubicacion: "La Colectora",
       estado: "PREVENTA",
       destacado: true,
@@ -201,9 +202,9 @@ const Main = () => {
       entrega: "Mar 2025",
       financiamiento: "Disponible",
       descripcion:
-        "Vive la experiencia más exclusiva en nuestro penthouse de lujo. Con vistas panorámicas de 360° y acabados de la más alta calidad, este es el hogar que siempre soñaste.",
+        "Lanzado en marzo de 2025,  EL proyecto HIKARI consta 15 departamentos distribuidos en 8 pisos ofrece unidades de 02 y 03 habitaciones. El edificio cuenta con ascensor panorámico  , zona de parrilla, lavandería y cochera inscritos en SUNARP. Los departamentos se destacan por sus acabados modernos. Su ubicación es estratégica, con fácil acceso a establecimientos e instituciones. Con una venta total de 9 departamentos.",
       ubicacionDetalle: {
-        direccion: "Av. La Colectora 456, Lima",
+        direccion: "Av. La Colectora",
         distrito: "La Colectora",
         coordenadas: { lat: -12.0464, lng: -77.0428 },
       },
@@ -249,7 +250,7 @@ const Main = () => {
         { icon: Building, nombre: "Smart lobby" },
       ],
       imagenes: [proyectosmart, estudio1, estudio2],
-      video3d: "https://res.cloudinary.com/dourqe39h/video/upload/v1751584424/onevideo_1_dcpgmn.mp4",
+      video3d: "https://res.cloudinary.com/dcj324bua/video/upload/v1752527161/Grabacio%CC%81n_de_pantalla_2025-07-14_a_la_s_16.03.23_online-video-cutter.com_dawup9.mp4",
       planos: [
         {
           tipo: "SMART A",
@@ -629,35 +630,75 @@ const Main = () => {
   }, [currentView, animationsInitialized])
 
   // FUNCIÓN CORREGIDA PARA MANEJAR EL TOGGLE DE VIDEO
+  // const handleVideoToggle = (depaId) => {
+  //   console.log("Toggle video for depa:", depaId)
+  //   // Primero actualizar el estado
+
+  //   setIsVideoPlaying((prev) => {
+  //     const newState = {
+  //       ...prev,
+  //       [depaId]: !prev[depaId],
+  //     }
+
+  //     // Usar setTimeout para asegurar que el DOM se actualice
+  //     setTimeout(() => {
+  //       const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
+  //       console.log("Video element found:", videoElement)
+  //       if (videoElement) {
+  //         if (newState[depaId]) {
+  //           // Si debe reproducirse
+  //           videoElement.play().catch((error) => {
+  //             console.error("Error playing video:", error)
+  //           })
+  //         } else {
+  //           // Si debe pausarse
+  //           videoElement.pause()
+  //         }
+  //       }
+  //     }, 100) // Pequeño delay para asegurar que el DOM se actualice
+
+  //     return newState
+  //   })
+  // }
   const handleVideoToggle = (depaId) => {
-    console.log("Toggle video for depa:", depaId)
-    // Primero actualizar el estado
-    setIsVideoPlaying((prev) => {
-      const newState = {
-        ...prev,
-        [depaId]: !prev[depaId],
-      }
+  console.log("Toggle video for depa:", depaId);
 
-      // Usar setTimeout para asegurar que el DOM se actualice
-      setTimeout(() => {
-        const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
-        console.log("Video element found:", videoElement)
+  setIsVideoPlaying((prev) => {
+    const newIsPlayingState = {};
+    const videoWasPlaying = prev[depaId]; // ¿El video clickeado ya se estaba reproduciendo?
+
+    // Primero, itera y pausa todos los videos actuales.
+    for (const id in prev) {
+      if (prev[id]) { // Si el video con este 'id' se estaba reproduciendo
+        const videoElement = document.querySelector(`[data-video-id="${id}"]`);
         if (videoElement) {
-          if (newState[depaId]) {
-            // Si debe reproducirse
-            videoElement.play().catch((error) => {
-              console.error("Error playing video:", error)
-            })
-          } else {
-            // Si debe pausarse
-            videoElement.pause()
-          }
+          videoElement.pause();
         }
-      }, 100) // Pequeño delay para asegurar que el DOM se actualice
+      }
+      // Resetea el estado de todos a 'false' (pausado).
+      newIsPlayingState[id] = false;
+    }
 
-      return newState
-    })
-  }
+    // Ahora, si el video que clickeaste no se estaba reproduciendo, reprodúcelo.
+    if (!videoWasPlaying) {
+      newIsPlayingState[depaId] = true; // Actualiza su estado a 'true'.
+      const videoElement = document.querySelector(`[data-video-id="${depaId}"]`);
+
+      // El setTimeout ayuda a asegurar que el estado se actualice antes de dar play.
+      setTimeout(() => {
+        if (videoElement) {
+          videoElement.play().catch((error) => {
+            console.error("Error attempting to play video:", error);
+          });
+        }
+      }, 0);
+    }
+    // Si el video ya se estaba reproduciendo, el bucle anterior ya lo pausó
+    // y su estado quedará en 'false', por lo que no se necesita hacer más.
+
+    return newIsPlayingState;
+  });
+};
 
   const handleAsesorSelect = (asesor) => {
     setSelectedAsesor(asesor)
@@ -888,7 +929,8 @@ Me gustaría agendar una cita para conocer más detalles.`
               </span>
             ))}
             {/* Espacio entre palabras */}
-            <span style={{ margin: "0 0.3rem sm:0 0.5rem" }} />
+              <span className="inline-block mx-1 sm:mx-2">&nbsp;</span>
+            {/* <span style={{ margin: "0 0.3rem sm:0 0.5rem" }} /> */}
             {"HOUSE".split("").map((letter, index) => (
               <span
                 key={`house-${index}`}
