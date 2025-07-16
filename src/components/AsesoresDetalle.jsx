@@ -17,7 +17,7 @@ const AsesoresDetalle = ({ onVolver }) => {
 
   // Datos simplificados y más visuales
   const asesoresDetallados = [
-    {
+    { 
       id: 1,
       nombre: "Jonel Casio",
       cargo: "Asesor Inmobiliario Senior",
