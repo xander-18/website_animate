@@ -8,6 +8,7 @@ const DepaCard = ({ depa, isVideoPlaying, handleVideoToggle, onVerProyecto }) =>
 
   return (
     <div className="w-full max-w-sm mx-auto depa-card bg-gradient-to-b from-gray-800/50 to-gray-900/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl group">
+    
       {/* Imagen o video - MEJORADO RESPONSIVE */}
       <div className="relative aspect-[4/3] sm:aspect-video overflow-hidden">
         {isVideoPlaying[depa.id] ? (
@@ -33,17 +34,16 @@ const DepaCard = ({ depa, isVideoPlaying, handleVideoToggle, onVerProyecto }) =>
             <span className="text-white/50 text-sm">Imagen no disponible</span>
           </div>
         )}
-        
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-        
+
         {/* Estado del proyecto - MEJORADO RESPONSIVE */}
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
           <span
-            className={`px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold transition-all duration-300 ${
-              depa.destacado 
-                ? "bg-emerald-400 text-black" 
+            className={`px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold transition-all duration-300 ${depa.destacado
+                ? "bg-emerald-400 text-black"
                 : "bg-white/20 text-white backdrop-blur-sm"
-            }`}
+              }`}
           >
             {depa.estado}
           </span>
@@ -83,43 +83,46 @@ const DepaCard = ({ depa, isVideoPlaying, handleVideoToggle, onVerProyecto }) =>
 
       {/* Información del proyecto - MEJORADO RESPONSIVE */}
       <div className="p-3 sm:p-4 lg:p-6">
-        {/* Ubicación - MEJORADO RESPONSIVE */}
-        <div className="flex items-center gap-2 mb-3 sm:mb-4">
-          <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 transition-transform duration-300 group-hover:scale-110 flex-shrink-0" />
-          <span className="text-white/80 text-xs sm:text-sm truncate">{depa.ubicacion}</span>
+        {/* Ubicación y área en la misma línea, área alineada a la derecha */}
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 transition-transform duration-300 group-hover:scale-110 flex-shrink-0" />
+            <span className="text-white/80 text-xs sm:text-sm truncate">{depa.ubicacion}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Ruler className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
+            <span className="text-white font-bold text-xs sm:text-sm">{depa.area}</span>
+            <span className="text-white/60 text-xs leading-tight">Área</span>
+          </div>
         </div>
-
-        {/* Especificaciones principales - MEJORADO RESPONSIVE */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4 mb-4 sm:mb-6">
-          {[
-            { icon: Bed, value: depa.dormitorios, label: "Dormitorios" },
-            { icon: Bath, value: depa.baños, label: "Baños" },
-            { icon: Ruler, value: depa.area, label: "Área" },
-          ].map(({ icon: Icon, value, label }, i) => (
-            <div key={i} className="text-center transition-all duration-300 hover:scale-105">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
-                <span className="text-white font-bold text-xs sm:text-sm">{value}</span>
-              </div>
-              <span className="text-white/60 text-xs leading-tight">{label}</span>
-            </div>
-          ))}
-        </div>
+        {/* ...resto del código... */}
 
         {/* Precio - MEJORADO RESPONSIVE */}
+        {/* Precio y entrega - MEJORADO RESPONSIVE */}
         <div className="mb-4 sm:mb-6">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex-1">
-              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-emerald-400 block">
+          {depa.precio === "Agotado" ? (
+            <div className="flex justify-center items-center">
+              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-red-500 text-center block">
                 {depa.precio}
               </span>
-              <span className="text-white/60 text-xs sm:text-sm">{depa.precioM2}</span>
             </div>
-            <div className="text-right flex-shrink-0">
-              <div className="text-white/80 text-xs sm:text-sm">Entrega: {depa.entrega}</div>
-              <div className="text-emerald-400 text-xs">{depa.financiamiento}</div>
+          ) : (
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1">
+                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-emerald-400 block">
+                  {depa.precio}
+                </span>
+                <span className="text-white/60 text-xs sm:text-sm">{depa.precioM2}</span>
+              </div>
+              {/* Mostrar entrega y financiamiento solo si existe entrega */}
+              {depa.entrega && (
+                <div className="text-right flex-shrink-0">
+                  <div className="text-white/80 text-xs sm:text-sm">Entrega: {depa.entrega}</div>
+                  <div className="text-emerald-400 text-xs">{depa.financiamiento}</div>
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
 
         {/* Botón de acción - MEJORADO RESPONSIVE */}

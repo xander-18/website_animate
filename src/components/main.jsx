@@ -40,7 +40,7 @@ import TestimoniosSection from "./TestimoniosSection"
 import huertasValle from "../assets/videos/0216.mp4"
 import NuestroEquipo from "./Nosotros"
 import ComingSoonOverlay from "./ComingSoonOverlay"
-
+import About from "./About"
 // Registrar el plugin
 gsap.registerPlugin(ScrollTrigger)
 
@@ -92,9 +92,9 @@ const Main = () => {
       destacado: true,
       area: "120m²",
       precio: "Agotado",
-      precioM2: "$2,428/m²",
+      // precioM2: "$2,428/m²",
       // dormitorios: 1,
-      baños: 1,
+      // baños: 1,
       estacionamiento: 1,
       caracteristicas: [
         { icon: Home, texto: "Diseño moderno y funcional" },
@@ -130,8 +130,8 @@ const Main = () => {
           imagen: "/placeholder.svg?height=400&width=600",
         },
       ],
-      entrega: "Inmediata",
-      financiamiento: "Agotado",
+      // entrega: "Inmediata",
+      // financiamiento: "Agotado",
       descripcion:
       "Lanzado en febrero de 2024, este proyecto de 26 lotes ubicado en Santa María del Valle tuvo una acogida excepcional, logrando vender el 95% en solo 3 meses. Cuenta con todos los servicios básicos: agua, luz y título de propiedad, ofreciendo seguridad y calidad a sus propietarios.",
       
@@ -159,9 +159,9 @@ const Main = () => {
       destacado: true,
       area: "120m²",
       precio: "$320,000",
-      precioM2: "$2,666/m²",
-      dormitorios: 3,
-      baños: 3,
+      // precioM2: "$2,666/m²",
+      // dormitorios: 3,
+      // baños: 3,k
       estacionamiento: 2,
       caracteristicas: [
         { icon: Home, texto: "Doble altura en sala" },
@@ -227,9 +227,9 @@ const Main = () => {
       destacado: false,
       area: "65m²",
       precio: "$145,000",
-      precioM2: "$2,230/m²",
-      dormitorios: 2,
-      baños: 2,
+      // precioM2: "$2,230/m²",
+      // dormitorios: 2,
+      // baños: 2,
       estacionamiento: 1,
       caracteristicas: [
         { icon: Home, texto: "Amplios espacios integrados" },
@@ -331,6 +331,12 @@ const Main = () => {
   const verSomos = () => {
     setCurrentView("somos")
     setMobileMenuOpen(false) // Cerrar menú móvil
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const verAbout = () => {
+    setCurrentView("pruebas")
+    setMobileMenuOpen(false) 
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
@@ -772,6 +778,10 @@ Me gustaría agendar una cita para conocer más detalles.`
     return <NuestroEquipo onVolver={volverAlHome} />
   }
 
+  if (currentView === "pruebas") {
+    return <About onVolver={volverAlHome} />
+  }
+
   return (
     <div className="min-h-screen bg-black">
       {/* NAVBAR FIJO AL HACER SCROLL - MEJORADO RESPONSIVE */}
@@ -812,6 +822,13 @@ Me gustaría agendar una cita para conocer más detalles.`
               className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
             >
               Nuestro Equipo
+            </button>
+
+            <button
+              onClick={verAbout}
+              className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
+            >
+              Pruebas
             </button>
           </div>
 
