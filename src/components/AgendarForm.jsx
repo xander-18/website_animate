@@ -108,7 +108,7 @@ const AgendarForm = ({ clientInfo, handleInputChange, handleSubmit, selectedAses
 
           {/* Texto informativo - MEJORADO RESPONSIVE */}
           <p className="text-white/60 text-center text-xs sm:text-sm">
-            Te contactaremos en menos de 2 horas para coordinar tu visita
+            Te contactaremos en menos de 30 min para coordinar tu visita
           </p>
 
           {/* Información adicional del asesor seleccionado - NUEVO */}

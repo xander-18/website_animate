@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Main from './components/main';
 import PoliticaPrivacidad from './pages/politica-de-privacidad';
 import FormularioAsesores from './pages/form-leads';
-import About from './components/About';
+// import Contacto from './components/Contacto';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/asesoria" element={<FormularioAsesores />} />
         <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
-        <Route path="/about" element={<About />} />
+        {/* <Route path="/contactanos " element={<Contacto />} /> */}
       </Routes>
     </Router>
   );

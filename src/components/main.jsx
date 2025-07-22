@@ -1,5 +1,4 @@
 "use client"
-
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -32,7 +31,6 @@ import proyectovalle from "../assets/img/logos-blackhouse/proyectovalle.jpg"
 import proyectosmart from "../assets/img/logos-blackhouse/proyectosmart.png"
 import DepaCard from "./DepaCard"
 import AgendarForm from "./AgendarForm"
-import { FaWhatsapp } from "react-icons/fa"
 import DetalleProyecto from "./DetalleProducto"
 import AsesoresSection from "./AsesoresSection"
 import AsesoresDetalle from "./AsesoresDetalle"
@@ -40,7 +38,8 @@ import TestimoniosSection from "./TestimoniosSection"
 import huertasValle from "../assets/videos/0216.mp4"
 import NuestroEquipo from "./Nosotros"
 import ComingSoonOverlay from "./ComingSoonOverlay"
-import About from "./About"
+import Contacto from "./Contacto"
+
 // Registrar el plugin
 gsap.registerPlugin(ScrollTrigger)
 
@@ -56,7 +55,6 @@ const Main = () => {
   const agendarRef = useRef(null)
   const galleryRef = useRef(null)
   const detalleRef = useRef(null)
-
   const [introComplete, setIntroComplete] = useState(false)
   const [animationsInitialized, setAnimationsInitialized] = useState(false)
   const [selectedBudget, setSelectedBudget] = useState("")
@@ -92,9 +90,6 @@ const Main = () => {
       destacado: true,
       area: "120m²",
       precio: "Agotado",
-      // precioM2: "$2,428/m²",
-      // dormitorios: 1,
-      // baños: 1,
       estacionamiento: 1,
       caracteristicas: [
         { icon: Home, texto: "Diseño moderno y funcional" },
@@ -130,24 +125,20 @@ const Main = () => {
           imagen: "/placeholder.svg?height=400&width=600",
         },
       ],
-      // entrega: "Inmediata",
-      // financiamiento: "Agotado",
       descripcion:
-      "Lanzado en febrero de 2024, este proyecto de 26 lotes ubicado en Santa María del Valle tuvo una acogida excepcional, logrando vender el 95% en solo 3 meses. Cuenta con todos los servicios básicos: agua, luz y título de propiedad, ofreciendo seguridad y calidad a sus propietarios.",
-      
-        ubicacionDetalle: {
+        "Lanzado en febrero de 2024, este proyecto de 26 lotes ubicado en Santa María del Valle tuvo una acogida excepcional, logrando vender el 95% en solo 3 meses. Cuenta con todos los servicios básicos: agua, luz y título de propiedad, ofreciendo seguridad y calidad a sus propietarios.",
+      ubicacionDetalle: {
         direccion: "Av. Santa María del Valle 123, Lima",
         distrito: "Santa María del Valle",
         coordenadas: { lat: -12.0464, lng: -77.0428 },
       },
       salaVentas: {
-        direccion: "Av. Rivera Navarrete 450, San Isidro",
+        direccion: "Jirón Pedro Puelles 671, Huánuco",
         horarios: {
-          lunes_viernes: "11:00 am a 8:00 pm",
-          sabado_domingo: "10:00 am a 6:00 pm",
+          lunes_viernes: "9:00 am a 1:00 pm",
         },
         telefono: "+51 999 999 999",
-        email: "ventas@blackhouse.pe",
+        email: "groupblackhouse@gmail.com",
       },
     },
     {
@@ -157,11 +148,8 @@ const Main = () => {
       ubicacion: "La Colectora",
       estado: "PREVENTA",
       destacado: true,
-      area: "120m²",
-      precio: "$320,000",
-      // precioM2: "$2,666/m²",
-      // dormitorios: 3,
-      // baños: 3,k
+      area: "62m² y 84m²",
+      precio: "s/193,000",
       estacionamiento: 2,
       caracteristicas: [
         { icon: Home, texto: "Doble altura en sala" },
@@ -172,14 +160,11 @@ const Main = () => {
         { icon: Wifi, texto: "Domótica avanzada" },
       ],
       amenidades: [
-        { icon: Building, nombre: "Helipuerto" },
-        { icon: Coffee, nombre: "Wine cellar" },
-        { icon: Eye, nombre: "Private cinema" },
-        { icon: TreePine, nombre: "Rooftop exclusivo" },
-        { icon: Users, nombre: "Mayordomo privado" },
-        { icon: Car, nombre: "Garage premium" },
-        { icon: Dumbbell, nombre: "Gym privado" },
-        { icon: Waves, nombre: "Spa personal" },
+        { icon: Building, nombre: "Ascensor Panoramico" },
+        { icon: Coffee, nombre: "Zona Social" },
+        { icon: Eye, nombre: "Zona de Parrilla" },
+        { icon: TreePine, nombre: "Area tendal" },
+        { icon: Users, nombre: "Zona Lavanderia" },
       ],
       imagenes: [estudio4, estudio1, estudio2],
       video3d: "https://res.cloudinary.com/dourqe39h/video/upload/v1751584424/onevideo_1_dcpgmn.mp4",
@@ -199,7 +184,7 @@ const Main = () => {
           imagen: "/placeholder.svg?height=400&width=600",
         },
       ],
-      entrega: "Mar 2025",
+      entrega: "Mayo 2026",
       financiamiento: "Disponible",
       descripcion:
         "Lanzado en marzo de 2025,  EL proyecto HIKARI consta 15 departamentos distribuidos en 8 pisos ofrece unidades de 02 y 03 habitaciones. El edificio cuenta con ascensor panorámico  , zona de parrilla, lavandería y cochera inscritos en SUNARP. Los departamentos se destacan por sus acabados modernos. Su ubicación es estratégica, con fácil acceso a establecimientos e instituciones. Con una venta total de 9 departamentos.",
@@ -209,27 +194,23 @@ const Main = () => {
         coordenadas: { lat: -12.0464, lng: -77.0428 },
       },
       salaVentas: {
-        direccion: "Av. Rivera Navarrete 450, San Isidro",
+        direccion: "Jirón Pedro Puelles 671, Huánuco",
         horarios: {
           lunes_viernes: "9:00 am a 1:00 pm",
-          sabado_domingo: "previa cita",
         },
         telefono: "+51 999 999 999",
-        email: "ventas@blackhouse.pe",
+        email: "groupblackhouse@gmail.com",
       },
     },
     {
       id: 3,
       nombre: "HALIT",
-      tipo: "DEPARTAMENTO INTELIGENTE",
-      ubicacion: "Huanuco",
+      tipo: "HUANUCO - AMARILIS",
+      ubicacion: "Los Portales",
       estado: "PRÓXIMO LANZAMIENTO",
       destacado: false,
       area: "65m²",
-      precio: "$145,000",
-      // precioM2: "$2,230/m²",
-      // dormitorios: 2,
-      // baños: 2,
+      precio: "Proximamente",
       estacionamiento: 1,
       caracteristicas: [
         { icon: Home, texto: "Amplios espacios integrados" },
@@ -250,7 +231,8 @@ const Main = () => {
         { icon: Building, nombre: "Smart lobby" },
       ],
       imagenes: [proyectosmart, estudio1, estudio2],
-      video3d: "https://res.cloudinary.com/dcj324bua/video/upload/v1752527161/Grabacio%CC%81n_de_pantalla_2025-07-14_a_la_s_16.03.23_online-video-cutter.com_dawup9.mp4",
+      video3d:
+        "https://res.cloudinary.com/dcj324bua/video/upload/v1752527161/Grabacio%CC%81n_de_pantalla_2025-07-14_a_la_s_16.03.23_online-video-cutter.com_dawup9.mp4",
       planos: [
         {
           tipo: "SMART A",
@@ -267,8 +249,6 @@ const Main = () => {
           imagen: "/placeholder.svg?height=400&width=600",
         },
       ],
-      entrega: "Proximamente",
-      financiamiento: "Disponible",
       descripcion:
         "Experimenta el futuro de la vida urbana con nuestro departamento inteligente. Tecnología de vanguardia y diseño contemporáneo se fusionan para crear tu hogar ideal.",
       ubicacionDetalle: {
@@ -277,23 +257,22 @@ const Main = () => {
         coordenadas: { lat: -12.0464, lng: -77.0428 },
       },
       salaVentas: {
-        direccion: "Av. Rivera Navarrete 450, San Isidro",
+        direccion: "Jirón Pedro Puelles 671, Huánuco",
         horarios: {
           lunes_viernes: "9:00 am a 1:00 pm",
-          sabado_domingo: "previa cita",
         },
         telefono: "+51 999 999 999",
-        email: "ventas@blackhouse.pe",
+        email: "groupblackhouse@gmail.com",
       },
     },
   ]
 
-  const filtros = [
-    { id: "todos", nombre: "Todos los proyectos" },
-    { id: "estudio", nombre: "Estudios" },
-    { id: "departamento", nombre: "Departamentos" },
-    { id: "penthouse", nombre: "Penthouses" },
-  ]
+  // const filtros = [
+  //   { id: "todos", nombre: "Todos los proyectos" },
+  //   { id: "estudio", nombre: "Estudios" },
+  //   { id: "departamento", nombre: "Departamentos" },
+  //   { id: "penthouse", nombre: "Penthouses" },
+  // ]
 
   // FUNCIONES DE NAVEGACIÓN
   const verProyecto = (proyecto) => {
@@ -334,9 +313,9 @@ const Main = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  const verAbout = () => {
-    setCurrentView("pruebas")
-    setMobileMenuOpen(false) 
+  const verContactanos = () => {
+    setCurrentView("contactanos")
+    setMobileMenuOpen(false)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
@@ -393,6 +372,69 @@ const Main = () => {
     setSelectedAsesor(asesor)
   }
 
+  const handleVideoToggle = (depaId) => {
+    console.log("Toggle video for depa:", depaId)
+    setIsVideoPlaying((prev) => {
+      const newIsPlayingState = {}
+      const videoWasPlaying = prev[depaId] // ¿El video clickeado ya se estaba reproduciendo?
+
+      // Primero, itera y pausa todos los videos actuales.
+      for (const id in prev) {
+        if (prev[id]) {
+          // Si el video con este 'id' se estaba reproduciendo
+          const videoElement = document.querySelector(`[data-video-id="${id}"]`)
+          if (videoElement) {
+            videoElement.pause()
+          }
+        }
+        // Resetea el estado de todos a 'false' (pausado).
+        newIsPlayingState[id] = false
+      }
+
+      // Ahora, si el video que clickeaste no se estaba reproduciendo, reprodúcelo.
+      if (!videoWasPlaying) {
+        newIsPlayingState[depaId] = true // Actualiza su estado a 'true'.
+        const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
+        // El setTimeout ayuda a asegurar que el estado se actualice antes de dar play.
+        setTimeout(() => {
+          if (videoElement) {
+            videoElement.play().catch((error) => {
+              console.error("Error attempting to play video:", error)
+            })
+          }
+        }, 0)
+      }
+
+      // Si el video ya se estaba reproduciendo, el bucle anterior ya lo pausó
+      // y su estado quedará en 'false', por lo que no se necesita hacer más.
+      return newIsPlayingState
+    })
+  }
+
+  const handleAsesorSelect = (asesor) => {
+    setSelectedAsesor(asesor)
+    setClientInfo({ ...clientInfo, asesor: asesor.nombre })
+  }
+
+  const handleInputChange = (field, value) => {
+    setClientInfo({ ...clientInfo, [field]: value })
+  }
+
+  const handleSubmit = () => {
+    const mensaje = `Hola! Estoy interesado en los departamentos BLACKHOUSE.
+
+Mis datos:
+• Nombre: ${clientInfo.nombre}
+• Teléfono: ${clientInfo.telefono}
+• Email: ${clientInfo.email}
+• Asesor preferido: ${selectedAsesor?.nombre || "No seleccionado"}
+
+Me gustaría agendar una cita para conocer más detalles.`
+
+    const whatsappUrl = `https://wa.me/51999999999?text=${encodeURIComponent(mensaje)}`
+    window.open(whatsappUrl, "_blank")
+  }
+
   useEffect(() => {
     // Event listener global para iniciar el audio en el primer clic
     const handleFirstClick = () => {
@@ -416,14 +458,14 @@ const Main = () => {
 
     // Inicializar Lenis para smooth scrolling premium
     const lenis = new Lenis({
-      duration: 1.2, // Reducido de 1.8 a 1.2
+      duration: 1.0, // Reducido para mejor performance
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: "vertical",
       gestureDirection: "vertical",
       smooth: true,
-      mouseMultiplier: 0.6, // Reducido de 0.8 a 0.6
+      mouseMultiplier: 0.5, // Reducido para menos sensibilidad
       smoothTouch: false,
-      touchMultiplier: 1.2, // Reducido de 1.5 a 1.2
+      touchMultiplier: 1.0, // Reducido para mejor control
       infinite: false,
     })
 
@@ -434,14 +476,14 @@ const Main = () => {
     })
     gsap.ticker.lagSmoothing(0)
 
-    // Configuración global de GSAP para animaciones más suaves y profesionales
+    // Configuración global de GSAP para mejor performance
     gsap.config({
       force3D: true,
       nullTargetWarn: false,
-      autoSleep: 60, // Añadir para mejor performance
+      autoSleep: 60,
     })
 
-    // Añadir configuración de performance
+    // Optimizar CSS para mejor performance
     gsap.set("*", { willChange: "auto" })
 
     // Solo ejecutar animaciones del hero si estamos en home
@@ -518,72 +560,77 @@ const Main = () => {
       // Marcar las animaciones como inicializadas
       setAnimationsInitialized(true)
 
-      // Animaciones de scroll ULTRA suaves (estilo Rockstar Games)
+      // ANIMACIONES DE SCROLL OPTIMIZADAS - AQUÍ ESTÁN LOS CAMBIOS PRINCIPALES
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
         end: "bottom top",
-        scrub: 2, // Reducido de 6 a 2 para menos lag
+        scrub: 0.5, // REDUCIDO DRÁSTICAMENTE de 2 a 0.5 para eliminar lag
         onUpdate: (self) => {
           const progress = self.progress
+          // Usar transform3d para mejor performance
           gsap.set(containerRef.current, {
-            // Cambiar 'to' por 'set' para mejor performance
-            opacity: 1 - progress * 0.2, // Reducido de 0.3 a 0.2
-            y: -4 * progress, // Reducido de -8 a -4
-            scale: 1 - progress * 0.005, // Reducido de 0.01 a 0.005
+            opacity: 1 - progress * 0.15, // Reducido el efecto
+            transform: `translate3d(0, ${-2 * progress}px, 0) scale(${1 - progress * 0.003})`, // Usar transform3d
           })
         },
       })
 
-      // Animaciones para la galería ULTRA suaves
+      // ANIMACIONES PARA LA GALERÍA ULTRA OPTIMIZADAS
       ScrollTrigger.create({
         trigger: galleryRef.current,
-        start: "top 85%", // Cambiar de 95% a 85%
+        start: "top 80%", // Cambiar para que se active antes
         onEnter: () => {
-          // Animación del título más rápida y simple
+          // Animación del título más simple y rápida
           if (galleryRef.current && galleryRef.current.querySelector("h2")) {
             gsap.fromTo(
               galleryRef.current.querySelector("h2"),
-              { opacity: 0, y: 30 }, // Reducir y de 50 a 30
-              { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, // Reducir duración de 3.5 a 1.2
+              { opacity: 0, y: 20 }, // Reducir movimiento
+              { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, // Más rápido
             )
           }
 
-          // Animación de tarjetas MÁS RÁPIDA Y EFICIENTE
+          // ANIMACIÓN DE TARJETAS ULTRA OPTIMIZADA
           const depaCards = document.querySelectorAll(".depa-card")
           if (depaCards.length > 0) {
-            gsap.fromTo(
-              depaCards,
-              { opacity: 0, y: 40, scale: 0.98 }, // Reducir y de 60 a 40, scale de 0.95 a 0.98
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.8, // Reducir duración de 2.5 a 0.8
-                stagger: 0.1, // Reducir stagger de 0.3 a 0.1
-                ease: "power2.out", // Cambiar ease más simple
-                delay: 0.2, // Reducir delay de 0.5 a 0.2
+            // Preparar las tarjetas para animación con will-change
+            gsap.set(depaCards, {
+              willChange: "transform, opacity",
+              transform: "translate3d(0, 30px, 0)", // Usar transform3d
+              opacity: 0,
+            })
+
+            // Animación más simple y rápida
+            gsap.to(depaCards, {
+              transform: "translate3d(0, 0, 0)", // Usar transform3d
+              opacity: 1,
+              duration: 0.6, // Más rápido
+              stagger: 0.08, // Reducir stagger
+              ease: "power2.out",
+              delay: 0.1,
+              onComplete: () => {
+                // Limpiar will-change después de la animación
+                gsap.set(depaCards, { willChange: "auto" })
               },
-            )
+            })
           }
         },
       })
 
       ScrollTrigger.create({
         trigger: agendarRef.current,
-        start: "top 85%", // Cambiar de 90% a 85%
+        start: "top 80%", // Cambiar para que se active antes
         onEnter: () => {
           if (agendarRef.current && agendarRef.current.children) {
             gsap.fromTo(
               agendarRef.current.children,
-              { opacity: 0, y: 20 }, // Reducir y de 35 a 20
+              { opacity: 0, y: 15 }, // Reducir movimiento
               {
                 opacity: 1,
                 y: 0,
-                scale: 1,
-                duration: 1, // Reducir duración de 3 a 1
-                stagger: 0.15, // Reducir stagger de 0.4 a 0.15
-                ease: "power2.out", // Cambiar ease más simple
+                duration: 0.8, // Más rápido
+                stagger: 0.1, // Reducir stagger
+                ease: "power2.out",
               },
             )
           }
@@ -595,24 +642,21 @@ const Main = () => {
         gsap.to(letters, {
           y: -2,
           color: "#00ff88",
-          textShadow: "0 0 15px #00ff88", // Simplificar shadow
-          duration: 0.6, // Reducir duración de 1.2 a 0.6
-          stagger: 0.02, // Reducir stagger de 0.03 a 0.02
+          textShadow: "0 0 15px #00ff88",
+          duration: 0.4, // Más rápido
+          stagger: 0.015, // Reducir stagger
           ease: "power2.out",
         })
       }
 
       const handleMouseLeave = () => {
-        const shadowIntensity = introComplete
-          ? "0 0 20px rgba(255,255,255,0.8)" // Simplificar shadow
-          : "0 0 8px rgba(255,255,255,0.4)"
-
+        const shadowIntensity = introComplete ? "0 0 20px rgba(255,255,255,0.8)" : "0 0 8px rgba(255,255,255,0.4)"
         gsap.to(letters, {
           y: 0,
           color: "#ffffff",
           textShadow: shadowIntensity,
-          duration: 0.6, // Reducir duración de 1.2 a 0.6
-          stagger: 0.02, // Reducir stagger de 0.03 a 0.02
+          duration: 0.4, // Más rápido
+          stagger: 0.015, // Reducir stagger
           ease: "power2.out",
         })
       }
@@ -635,111 +679,27 @@ const Main = () => {
     }
   }, [currentView, animationsInitialized])
 
-  // FUNCIÓN CORREGIDA PARA MANEJAR EL TOGGLE DE VIDEO
-  // const handleVideoToggle = (depaId) => {
-  //   console.log("Toggle video for depa:", depaId)
-  //   // Primero actualizar el estado
-
-  //   setIsVideoPlaying((prev) => {
-  //     const newState = {
-  //       ...prev,
-  //       [depaId]: !prev[depaId],
-  //     }
-
-  //     // Usar setTimeout para asegurar que el DOM se actualice
-  //     setTimeout(() => {
-  //       const videoElement = document.querySelector(`[data-video-id="${depaId}"]`)
-  //       console.log("Video element found:", videoElement)
-  //       if (videoElement) {
-  //         if (newState[depaId]) {
-  //           // Si debe reproducirse
-  //           videoElement.play().catch((error) => {
-  //             console.error("Error playing video:", error)
-  //           })
-  //         } else {
-  //           // Si debe pausarse
-  //           videoElement.pause()
-  //         }
-  //       }
-  //     }, 100) // Pequeño delay para asegurar que el DOM se actualice
-
-  //     return newState
-  //   })
-  // }
-  const handleVideoToggle = (depaId) => {
-  console.log("Toggle video for depa:", depaId);
-
-  setIsVideoPlaying((prev) => {
-    const newIsPlayingState = {};
-    const videoWasPlaying = prev[depaId]; // ¿El video clickeado ya se estaba reproduciendo?
-
-    // Primero, itera y pausa todos los videos actuales.
-    for (const id in prev) {
-      if (prev[id]) { // Si el video con este 'id' se estaba reproduciendo
-        const videoElement = document.querySelector(`[data-video-id="${id}"]`);
-        if (videoElement) {
-          videoElement.pause();
-        }
-      }
-      // Resetea el estado de todos a 'false' (pausado).
-      newIsPlayingState[id] = false;
-    }
-
-    // Ahora, si el video que clickeaste no se estaba reproduciendo, reprodúcelo.
-    if (!videoWasPlaying) {
-      newIsPlayingState[depaId] = true; // Actualiza su estado a 'true'.
-      const videoElement = document.querySelector(`[data-video-id="${depaId}"]`);
-
-      // El setTimeout ayuda a asegurar que el estado se actualice antes de dar play.
-      setTimeout(() => {
-        if (videoElement) {
-          videoElement.play().catch((error) => {
-            console.error("Error attempting to play video:", error);
-          });
-        }
-      }, 0);
-    }
-    // Si el video ya se estaba reproduciendo, el bucle anterior ya lo pausó
-    // y su estado quedará en 'false', por lo que no se necesita hacer más.
-
-    return newIsPlayingState;
-  });
-};
-
-  const handleAsesorSelect = (asesor) => {
-    setSelectedAsesor(asesor)
-    setClientInfo({ ...clientInfo, asesor: asesor.nombre })
-  }
-
-  const handleInputChange = (field, value) => {
-    setClientInfo({ ...clientInfo, [field]: value })
-  }
-
-  const handleSubmit = () => {
-    const mensaje = `Hola! Estoy interesado en los departamentos BLACKHOUSE.
-
-Mis datos:
-• Nombre: ${clientInfo.nombre}
-• Teléfono: ${clientInfo.telefono}
-• Email: ${clientInfo.email}
-• Asesor preferido: ${selectedAsesor?.nombre || "No seleccionado"}
-
-Me gustaría agendar una cita para conocer más detalles.`
-
-    const whatsappUrl = `https://wa.me/51999999999?text=${encodeURIComponent(mensaje)}`
-    window.open(whatsappUrl, "_blank")
-  }
-
+  // OPTIMIZACIÓN CSS MEJORADA
   useEffect(() => {
-    // Optimizar CSS para las tarjetas de departamentos
     const style = document.createElement("style")
     style.textContent = `
       .depa-card {
         will-change: transform, opacity;
         transform: translateZ(0);
         backface-visibility: hidden;
+        perspective: 1000px;
       }
       .depa-card:hover {
+        will-change: transform;
+      }
+      /* Optimización para scroll suave */
+      * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Optimización para animaciones */
+      .gallery-section {
+        transform: translateZ(0);
         will-change: transform;
       }
     `
@@ -778,8 +738,8 @@ Me gustaría agendar una cita para conocer más detalles.`
     return <NuestroEquipo onVolver={volverAlHome} />
   }
 
-  if (currentView === "pruebas") {
-    return <About onVolver={volverAlHome} />
+  if (currentView === "contactanos") {
+    return <Contacto onVolver={volverAlHome} />
   }
 
   return (
@@ -804,7 +764,7 @@ Me gustaría agendar una cita para conocer más detalles.`
           </div>
 
           {/* Items de navegación desktop - OCULTOS EN MÓVIL */}
-         <div className="hidden md:flex items-center gap-8 ml-auto mr-10">
+          <div className="hidden md:flex items-center gap-8 ml-auto mr-10">
             <button
               onClick={verAsesores}
               className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
@@ -823,12 +783,11 @@ Me gustaría agendar una cita para conocer más detalles.`
             >
               Nuestro Equipo
             </button>
-
             <button
-              onClick={verAbout}
+              onClick={verContactanos}
               className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
             >
-              Pruebas
+              Contactanos
             </button>
           </div>
 
@@ -841,19 +800,6 @@ Me gustaría agendar una cita para conocer más detalles.`
               aria-label="Menú"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-
-            {/* Botón WhatsApp */}
-            <button
-              onClick={() => {
-                window.open("https://wa.me/51935090537?", "_blank")
-                galleryRef.current?.scrollIntoView({ behavior: "smooth" })
-              }}
-              className="bg-emerald-400 hover:bg-emerald-500 text-black font-semibold px-3 py-2 sm:px-4 sm:py-2 rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-1 sm:gap-2"
-              aria-label="Ver Departamentos"
-            >
-              <FaWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline text-sm">WhatsApp</span>
             </button>
           </div>
         </div>
@@ -879,6 +825,12 @@ Me gustaría agendar una cita para conocer más detalles.`
                 className="block w-full text-left text-white hover:text-emerald-400 transition-colors duration-300 font-medium py-2"
               >
                 Nuestro Equipo
+              </button>
+              <button
+                onClick={verContactanos}
+                className="text-white hover:text-emerald-400 transition-colors duration-300 font-medium"
+              >
+                Contactanos
               </button>
             </div>
           </div>
@@ -909,6 +861,7 @@ Me gustaría agendar una cita para conocer más detalles.`
           />
           Tu navegador no soporta el elemento video.
         </video>
+
         <div ref={videoOverlayRef} className="absolute inset-0 bg-black/70 transition-opacity duration-1000" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
 
@@ -946,8 +899,7 @@ Me gustaría agendar una cita para conocer más detalles.`
               </span>
             ))}
             {/* Espacio entre palabras */}
-              <span className="inline-block mx-1 sm:mx-2">&nbsp;</span>
-            {/* <span style={{ margin: "0 0.3rem sm:0 0.5rem" }} /> */}
+            <span className="inline-block mx-1 sm:mx-2">&nbsp;</span>
             {"HOUSE".split("").map((letter, index) => (
               <span
                 key={`house-${index}`}
@@ -975,10 +927,10 @@ Me gustaría agendar una cita para conocer más detalles.`
         </div>
       </div>
 
-      {/* SECCIÓN DE DEPARTAMENTOS - MEJORADO RESPONSIVE */}
+      {/* SECCIÓN DE DEPARTAMENTOS - OPTIMIZADA PARA PERFORMANCE */}
       <section
         ref={galleryRef}
-        className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-12 sm:py-16 lg:py-20"
+        className="gallery-section min-h-screen bg-gradient-to-b from-black to-gray-900 py-12 sm:py-16 lg:py-20"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Header con estilo Edifica - MEJORADO RESPONSIVE */}
@@ -995,7 +947,7 @@ Me gustaría agendar una cita para conocer más detalles.`
           </div>
 
           {/* Filtros estilo Edifica - MEJORADO RESPONSIVE */}
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+          {/* <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             {filtros.map((filtro) => (
               <button
                 key={filtro.id}
@@ -1009,10 +961,10 @@ Me gustaría agendar una cita para conocer más detalles.`
                 {filtro.nombre}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {/* Grid de departamentos estilo Edifica - MEJORADO RESPONSIVE */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {departamentosFiltrados.map((depa) => (
               <DepaCard
                 key={depa.id}
@@ -1021,7 +973,17 @@ Me gustaría agendar una cita para conocer más detalles.`
                 handleVideoToggle={handleVideoToggle}
                 onVerProyecto={() => verProyecto(depa)}
               />
-            ))}
+            ))} */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {departamentos.map((depa) => (
+            <DepaCard
+              key={depa.id}
+              depa={depa}
+              isVideoPlaying={isVideoPlaying}
+              handleVideoToggle={handleVideoToggle}
+              onVerProyecto={() => verProyecto(depa)}
+            />
+          ))}
           </div>
         </div>
       </section>
